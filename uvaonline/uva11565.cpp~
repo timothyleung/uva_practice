@@ -1,0 +1,31 @@
+#include <iostream>
+
+using namespace std;
+
+#define limit 10000
+
+int main(){
+  int n,x,y,z,A,B,C, count;
+  scanf("%d", &n);
+  while(n--){
+    count = 0;
+    scanf("%d %d %d", &A, &B, &C);
+    for(int x=1; x <= limit; x++){
+      for(int y=1; y<= limit; y++){
+	for(int z=1; z<= limit; z++){
+	  if(x*x + y*y + z * z == C){
+	    if(x*y*z==B){
+	      if(x+y+z==A){
+		printf("%d %d %d\n", x, y, z);
+		count++;
+	      }
+	    }
+	  }
+	}
+      }
+    }
+    if(count==0){
+      printf("No solution.\n");
+    }
+  }
+}
