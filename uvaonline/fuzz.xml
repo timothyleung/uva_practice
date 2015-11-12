@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Peach xmlns="http://peachfuzzer.com/2012/Peach" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://peachfuzzer.com/2012/Peach ../peach.xsd">
+
+  <DataModel name="DataLOGIN">
+    <String value="LOGIN T00W T00W\r\n" mutable="false" token="true"/>
+  </DataModel>
+  <DataModel name="DataSHOWM">
+    <String value="SHOWM T00WT00W\r\n" mutable="false" token="true"/>
+  </DataModel>
+    <DataModel name="DataLISTM">
+    <String value="LISTM T00WT00W\r\n" mutable="false" token="true"/>
+  </DataModel>
+    <DataModel name="DataSENDM">
+    <String value="SENDM T00WT00W\r\n" mutable="false" token="true"/>
+  </DataModel>
+
+    
+
+  <DataModel name="DataHELP">
+	<String value="HELP " mutable="false" token="true"/>
+    <String value=""/>
+    <String value="\r\n" mutable="false" token="true"/>
+  </DataModel>
+  
+  <StateModel name="StateHELP" initialState="Initial">
+    <State name="Initial">
+      <Action type="input" ><DataModel ref="DataResponse"/></Action>
+      <Action type="output"><DataModel ref="DataLOGIN"/></Action>
+      <Action type="input" ><DataModel ref="DataResponse"/></Action>
+      <Action type="output"><DataModel ref="DataHELP"/></Action>
+      <Action type="input" ><DataModel ref="DataResponse"/></Action>
+    </State>
+  </StateModel>
+
+  <DataModel name="DataResponse">
+    <String value=""/>
+  </DataModel>
+
+  <Agent name="RemoteAgent" location="tcp://127.0.0.1:9001">
+    <!-- Run and attach windbg to a vulnerable server. -->
+    <Monitor class="WindowsDebugger">
+      <Param name="CommandLine" value="&quot;C:\Documents and Settings\Administrator\Desktop\OffsecSrv\offsecsrv.exe&quot;"/>
+	  <Param name="WinDbgPath" value="C:\Program Files\Debugging Tools for Windows (x86)" />
+    </Monitor>
+  </Agent>
+
+  <Test name="TestHELP">
+    <Agent ref="RemoteAgent"/>
+    <StateModel ref="StateHELP"/>
+    <Publisher class="TcpClient">
+      <Param name="Host" value="127.0.0.1"/>
+      <Param name="Port" value="4321"/>
+    </Publisher>
+	
+	<Logger class="File">
+      <Param name="Path" value="Logs"/>
+    </Logger>
+  </Test> 
+</Peach>
