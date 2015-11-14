@@ -2,33 +2,16 @@
 <Peach xmlns="http://peachfuzzer.com/2012/Peach" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://peachfuzzer.com/2012/Peach ../peach.xsd">
 
-  <DataModel name="DataLOGIN">
-    <String value="LOGIN T00W T00W\r\n" mutable="false" token="true"/>
-  </DataModel>
-  <DataModel name="DataSHOWM">
-    <String value="SHOWM T00WT00W\r\n" mutable="false" token="true"/>
-  </DataModel>
-    <DataModel name="DataLISTM">
-    <String value="LISTM T00WT00W\r\n" mutable="false" token="true"/>
-  </DataModel>
-    <DataModel name="DataSENDM">
-    <String value="SENDM T00WT00W\r\n" mutable="false" token="true"/>
-  </DataModel>
-
-    
-
-  <DataModel name="DataHELP">
-	<String value="HELP " mutable="false" token="true"/>
+  <DataModel name="DataHTER">
+    <String value="USER " mutable="false" token="true"/>
     <String value=""/>
     <String value="\r\n" mutable="false" token="true"/>
   </DataModel>
   
-  <StateModel name="StateHELP" initialState="Initial">
+  <StateModel name="StateHTER" initialState="Initial">
     <State name="Initial">
       <Action type="input" ><DataModel ref="DataResponse"/></Action>
-      <Action type="output"><DataModel ref="DataLOGIN"/></Action>
-      <Action type="input" ><DataModel ref="DataResponse"/></Action>
-      <Action type="output"><DataModel ref="DataHELP"/></Action>
+      <Action type="output"><DataModel ref="DataHTER"/></Action>
       <Action type="input" ><DataModel ref="DataResponse"/></Action>
     </State>
   </StateModel>
@@ -40,17 +23,17 @@
   <Agent name="RemoteAgent" location="tcp://127.0.0.1:9001">
     <!-- Run and attach windbg to a vulnerable server. -->
     <Monitor class="WindowsDebugger">
-      <Param name="CommandLine" value="&quot;C:\Documents and Settings\Administrator\Desktop\OffsecSrv\offsecsrv.exe&quot;"/>
-	  <Param name="WinDbgPath" value="C:\Program Files\Debugging Tools for Windows (x86)" />
+      <Param name="CommandLine" value="&quot;C:\Program Files (x86)\FileZilla Server\FileZilla Server.exe&quot;"/>
+	  <Param name="WinDbgPath" value="C:\Program Files\Debugging Tools for Windows (x64)" />
     </Monitor>
   </Agent>
 
-  <Test name="TestHELP">
+  <Test name="TestHTER">
     <Agent ref="RemoteAgent"/>
-    <StateModel ref="StateHELP"/>
+    <StateModel ref="StateHTER"/>
     <Publisher class="TcpClient">
       <Param name="Host" value="127.0.0.1"/>
-      <Param name="Port" value="4321"/>
+      <Param name="Port" value="21"/>
     </Publisher>
 	
 	<Logger class="File">
